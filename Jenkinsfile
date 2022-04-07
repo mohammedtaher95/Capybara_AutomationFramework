@@ -1,3 +1,5 @@
+Pipeline
+{
 agent { docker { image 'ruby:2.6.1' } }
 
 node {
@@ -51,4 +53,6 @@ node {
                    bat("docker-compose down")
                 }
         }
+}
+
 }
