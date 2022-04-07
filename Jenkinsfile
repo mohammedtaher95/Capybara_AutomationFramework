@@ -1,12 +1,12 @@
+agent { docker { image 'ruby:2.6.1' } }
+
 node {
-    def mvnHome
     stage('Get latest Pulls') { // for display purposes
         // Get some code from a GitHub repository
-        git 'https://github.com/mohammedtaher95/SeleniumJavaPOMFramework.git'
+        git 'https://github.com/mohammedtaher95/Capybara_AutomationFramework.git'
         // Get the Maven tool.
         // ** NOTE: This 'M3' Maven tool must be configured
         // **       in the global configuration.
-        mvnHome = tool 'MAVEN_HOME'
     }
 
     stage('Starting Grid') { // for display purposes
@@ -19,13 +19,15 @@ node {
             }
     }
 
-    stage('Clean Old Builds') {
+    stage('Installing Bundles') {
             // Run the maven build
             withEnv(["MVN_HOME=$mvnHome"]) {
                 if (isUnix()) {
-                    sh '"$MVN_HOME/bin/mvn" clean'
+                    sh 'gem install bundler'
+                    sh 'bundle install'
                 } else {
-                    bat(/"%MVN_HOME%\bin\mvn" clean/)
+                    bat("gem install bundler")
+                    bat("bundle install")
                 }
             }
         }
@@ -33,9 +35,9 @@ node {
         // Run the maven build
         withEnv(["MVN_HOME=$mvnHome"]) {
             if (isUnix()) {
-                sh '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean package -X'
+                sh 'rspec Basic_Features/spec/'
             } else {
-                bat(/"%MVN_HOME%\bin\mvn" -Dmaven.test.failure.ignore clean package -X/)
+                bat('rspec Basic_Features/spec/')
             }
         }
     }
@@ -49,10 +51,4 @@ node {
                    bat("docker-compose down")
                 }
         }
-    stage('Results') {
-        // testng '**/target/surefire-reports/TEST-*.xml'
-        // archiveArtifacts 'target/*.jar'
-        step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-        
-    }
 }
