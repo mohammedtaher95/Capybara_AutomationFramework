@@ -2,8 +2,7 @@ pipeline
 {
     agent {
         docker {
-            image "ruby:alphine"
-            args "--network=skynet"
+            image "ruby"
         }
     }
 
