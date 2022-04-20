@@ -2,7 +2,7 @@ pipeline
 {
     agent { docker { image 'ruby' } }
 
-    stages
+    node
     {
        stage('Get latest Pulls') { // for display purposes
                // Get some code from a GitHub repository
