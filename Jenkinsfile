@@ -2,12 +2,12 @@ pipeline
 {
     agent {
         docker {
-            image "ruby"
+            image "ruby:alpine"
+            args "--network=skynet"
         }
     }
 
     stages {
-
        stage('Get latest Pulls') { // for display purposes
                // Get some code from a GitHub repository
            steps {
