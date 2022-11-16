@@ -17,19 +17,6 @@ node
                 }
         }
 
-        stage('Installing Bundles') {
-                script {
-                    if (isUnix()) {
-                        sh 'gem install bundler'
-                        sh 'bundle install'
-                    }
-                    else {
-                        bat("gem install bundler")
-                        bat("bundle install")
-                    }
-                }
-        }
-
         stage('Run Tests') {
                 script {
                     if (isUnix()) {
