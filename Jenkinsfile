@@ -1,6 +1,5 @@
-pipeline
+node
 {
-    stages {
        stage('Get latest Pulls') { // for display purposes
                // Get some code from a GitHub repository
            steps {
@@ -62,5 +61,5 @@ pipeline
                }
            }
          }
-    }
+
 }
