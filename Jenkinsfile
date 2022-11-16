@@ -2,7 +2,7 @@ pipeline
 {
     agent {
         docker {
-            image "ruby:alphine"
+            image "ruby"
         }
     }
 
