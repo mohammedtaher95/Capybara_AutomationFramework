@@ -2,13 +2,10 @@ node
 {
        stage('Get latest Pulls') { // for display purposes
                // Get some code from a GitHub repository
-           steps {
                git 'https://github.com/mohammedtaher95/Capybara_AutomationFramework.git'
-           }
        }
 
         stage('Starting Grid') {
-            steps {
                 script {
                     if (isUnix()) {
                         sh "docker-compose up -d"
@@ -18,11 +15,9 @@ node
                         bat("docker-compose up -d")
                     }
                 }
-            }
         }
 
         stage('Installing Bundles') {
-            steps {
                 script {
                     if (isUnix()) {
                         sh 'gem install bundler'
@@ -33,11 +28,9 @@ node
                         bat("bundle install")
                     }
                 }
-            }
         }
 
         stage('Run Tests') {
-            steps {
                 script {
                     if (isUnix()) {
                         sh 'rspec Basic_Features/spec/'
@@ -46,11 +39,9 @@ node
                         bat('rspec Basic_Features/spec/')
                     }
                 }
-           }
         }
 
         stage('Teardown Grid') {
-           steps {
                script {
                    if (isUnix()) {
                        sh "docker-compose down"
@@ -59,7 +50,6 @@ node
                        bat("docker-compose down")
                    }
                }
-           }
          }
 
 }
