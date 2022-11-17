@@ -32,10 +32,12 @@ pipeline
             steps {
                 script {
                     if (isUnix()) {
+                        sh 'cd Basic_Features'
                         sh 'gem install bundler'
                         sh 'bundle install'
                     }
                     else {
+                        bat("cd Basic_Features")
                         bat("gem install bundler")
                         bat("bundle install")
                     }
@@ -47,10 +49,10 @@ pipeline
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'rspec Basic_Features/spec/'
+                        sh 'rspec spec/'
                     }
                     else {
-                        bat('rspec Basic_Features/spec/')
+                        bat('rspec spec/')
                     }
                 }
            }
