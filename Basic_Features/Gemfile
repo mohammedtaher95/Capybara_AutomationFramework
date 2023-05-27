@@ -1,15 +1,18 @@
 source 'https://rubygems.org'
 
 # Released: January 24, 2019
-gem 'capybara', '~> 3.33'
-gem 'rspec', '~> 3.11'
+gem 'capybara', '~> 3.39', '>= 3.39.1'
+gem 'rspec', '~> 3.12'
 #gem 'rspec', '~> 3.8' # Released: August 4, 2018
 gem 'rubocop', '~> 1.26', '>= 1.26.1'
 gem 'psych', '~> 3.2'
-gem 'selenium-webdriver', '~> 3.141' # Released: November 1, 2018
+gem 'selenium-webdriver', '~> 4.9', '>= 4.9.1' # Released: November 1, 2018
 gem 'launchy', '~> 2.4', '>= 2.4.3' # Released November 3, 2014
-gem 'webdrivers', '~> 4.4', '>= 4.4.1'
+gem 'webdrivers', '~> 5.2'
 gem 'factory_bot', '~> 6.1'
 #gem 'webdrivers', '~> 4.1.0' # Released October 7, 2019
 gem 'ffi', '~> 1.13', '>= 1.13.1'
 gem 'rspec_junit_formatter', '~> 0.6.0'
+gem 'simplecov'
+gem 'simplecov-rcov'
+gem 'ci_reporter'

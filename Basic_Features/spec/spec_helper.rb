@@ -1,61 +1,75 @@
-require 'rspec'
 require 'capybara/rspec'
-require 'capybara/dsl'
 require 'selenium-webdriver'
 
-# Bundler.setup(:default)
-# Bundler.require
-
-Capybara.configure do |config|
-
-  config.app_host = 'https://the-internet.herokuapp.com'
-  config.run_server = false
-
-  config.default_driver = :remote_browser
-  config.javascript_driver = :remote_browser
-
-  config.default_max_wait_time = 10
-end
-
-# Capybara.default_driver = :selenium_chrome
+# Capybara.register_driver :remote_chrome do |app|
+#   options = Selenium::WebDriver::Options.chrome
+#
+#   Capybara::Selenium::Driver.new(
+#     app,
+#     browser: :remote,
+#     url: 'http://localhost:4444/wd/hub',
+#     options: options
+#   )
+# end
+#
+# Capybara.register_driver :remote_firefox do |app|
+#   options = Selenium::WebDriver::Options.firefox
+#
+#   Capybara::Selenium::Driver.new(
+#     app,
+#     browser: :remote,
+#     url: 'http://localhost:4444/wd/hub',
+#     options: options
+#   )
+# end
 
 RSpec.configure do |config|
   config.formatter = :documentation
   config.include Capybara::DSL
 end
 
+
+Capybara.configure do |config|
+  config.run_server = false
+  config.default_driver = :remote_browser
+  config.app_host = 'https://the-internet.herokuapp.com'
+  config.javascript_driver = :remote_browser
+  config.default_max_wait_time = 10
+end
+
+
 module Grid
   class TestRunner
-    BROWSERS = ['firefox', 'chrome'].freeze
+    BROWSERS = %w[firefox chrome].freeze
 
     def run
       BROWSERS.each do |browser|
-        setup(browser)
+        setUp(browser)
         yield
       end
     end
 
-    def setup(browser)
+    def setUp(browser)
       puts "\n\n############################"
       puts "Starting #{browser.capitalize} test run..."
       puts "############################\n\n"
 
       Capybara.register_driver :remote_browser do |app|
-        capabilities = Selenium::WebDriver::Remote::Capabilities.send(browser.to_sym)
+        options = Selenium::WebDriver::Options.send(browser.to_sym)
 
         Capybara::Selenium::Driver.new(
           app,
-          browser: browser.to_sym,
-          url: "http://localhost:4444/wd/hub",
-          desired_capabilities: capabilities
+          browser: :remote,
+          url: 'http://localhost:4444/wd/hub',
+          options: options
         )
       end
     end
   end
 end
 
-testrunner = Grid::TestRunner.new
-testrunner.run do
+test_runner = Grid::TestRunner.new
+test_runner.run do
   RSpec::Core::Runner.run ['spec']
   RSpec.clear_examples
 end
