@@ -49,7 +49,10 @@ pipeline
                         sh 'rspec spec/'
                     }
                     else {
-                        bat('rspec spec/')
+                        dir('Basic_Features'){
+                             bat('rspec spec/')
+                        }
+
                     }
                 }
            }
