@@ -33,7 +33,9 @@ pipeline
                         sh 'bundle install'
                     }
                     else {
-                        dir('/var/jenkins_home/workspace/Capybara-AutomationFramework/Basic_Features')
+                        steps{
+                            dir('/var/jenkins_home/workspace/Capybara-AutomationFramework/Basic_Features')
+                        }
                         bat('gem install bundler')
                         bat('bundle install')
                     }
