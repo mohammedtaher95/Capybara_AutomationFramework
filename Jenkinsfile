@@ -42,11 +42,13 @@ pipeline
                 stage('Run Tests') {
                     steps {
                         script {
-                            if (isUnix()) {
-                                sh 'rspec spec/'
-                            } else {
-                                dir('Basic_Features') {
-                                    bat('bundle exec rspec spec/')
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                if (isUnix()) {
+                                    sh 'rspec spec/'
+                                } else {
+                                    dir('Basic_Features') {
+                                        bat('bundle exec rspec spec/')
+                                    }
                                 }
 
                             }
@@ -55,25 +57,14 @@ pipeline
                 }
 
                 stage('Teardown Grid') {
-                    steps {
-                        script {
-                            if(previousStageFailed())
-                            {
-                                if (isUnix()) {
-                                    sh "docker-compose down"
-                                } else {
-                                    bat("docker-compose down")
-                                }
-                            }
-                            else {
-                                if (isUnix()) {
-                                    sh "docker-compose down"
-                                } else {
-                                    bat("docker-compose down")
-                                }
-                            }
+                    script {
+                        if (isUnix()) {
+                            sh "docker-compose down"
+                        } else {
+                            bat("docker-compose down")
                         }
                     }
                 }
             }
         }
+}
