@@ -55,15 +55,22 @@ pipeline
                 }
 
                 stage('Teardown Grid') {
-                    when {
-                            expression { true }
-                          }
                     steps {
                         script {
-                            if (isUnix()) {
-                                sh "docker-compose down"
-                            } else {
-                                bat("docker-compose down")
+                            if(previousStageFailed())
+                            {
+                                if (isUnix()) {
+                                    sh "docker-compose down"
+                                } else {
+                                    bat("docker-compose down")
+                                }
+                            }
+                            else {
+                                if (isUnix()) {
+                                    sh "docker-compose down"
+                                } else {
+                                    bat("docker-compose down")
+                                }
                             }
                         }
                     }
