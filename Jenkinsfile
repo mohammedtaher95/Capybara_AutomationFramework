@@ -26,6 +26,7 @@ pipeline
 
         stage('Installing Bundles') {
             steps {
+                dir('/var/jenkins_home/workspace/Capybara-AutomationFramework/Basic_Features')
                 script {
                     if (isUnix()) {
                         sh 'cd Basic_Features'
@@ -33,9 +34,6 @@ pipeline
                         sh 'bundle install'
                     }
                     else {
-                        steps{
-                            dir('/var/jenkins_home/workspace/Capybara-AutomationFramework/Basic_Features')
-                        }
                         bat('gem install bundler')
                         bat('bundle install')
                     }
