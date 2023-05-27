@@ -33,7 +33,7 @@ pipeline
                         sh 'bundle install'
                     }
                     else {
-                        bat('cd /Basic_Features/')
+                        bat('cd \Basic_Features')
                         bat('gem install bundler')
                         bat('bundle install')
                     }
